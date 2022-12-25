@@ -1,34 +1,18 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { useApi } from "../../../hooks/useApi";
+import { Link } from "react-router-dom";
+import { User } from "../../../../types/User";
 
-const AddUser = () => {
-  const navigate = useNavigate();
+interface AddUserProps extends User {
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-  const [user, setUser] = useState({
-    name: "",
-    username: "",
-    email: "",
-  });
-
-  const { name, username, email } = user;
-
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
-  };
-
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    try {
-      await useApi.post("/user", user);
-
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+const AddUserView = ({
+  onSubmit,
+  name,
+  username,
+  email,
+  onInputChange,
+}: AddUserProps) => {
   return (
     <div className="container">
       <div className="row">
@@ -89,4 +73,4 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+export default AddUserView;
