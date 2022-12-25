@@ -4,6 +4,7 @@ import { User } from "../../../../types/User";
 interface AddUserProps extends User {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error: any;
 }
 
 const AddUserView = ({
@@ -12,6 +13,7 @@ const AddUserView = ({
   username,
   email,
   onInputChange,
+  error,
 }: AddUserProps) => {
   return (
     <div className="container">
@@ -58,6 +60,12 @@ const AddUserView = ({
                 onChange={(e) => onInputChange(e)}
               />
             </div>
+            {error &&
+              error.map((err: string, idx: number) => (
+                <div key={idx} className="d-flex align-items-center">
+                  <p className="text-danger">{err}</p>
+                </div>
+              ))}
             <div className="d-flex justify-content-end">
               <button type="submit" className="btn btn-outline-primary">
                 Criar

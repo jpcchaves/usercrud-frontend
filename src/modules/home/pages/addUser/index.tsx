@@ -6,6 +6,8 @@ import AddUserView from "./view";
 const AddUser = () => {
   const navigate = useNavigate();
 
+  const [error, setError] = useState([]);
+
   const [user, setUser] = useState({
     name: "",
     username: "",
@@ -25,8 +27,12 @@ const AddUser = () => {
       await useApi.post("/user", user);
 
       navigate("/");
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      if (error.response) {
+        const { data } = error.response;
+        setError(Object.values(data));
+      }
+      console.log(error.message);
     }
   };
 
@@ -37,6 +43,7 @@ const AddUser = () => {
       username={username}
       email={email}
       onInputChange={onInputChange}
+      error={error}
     />
   );
 };
