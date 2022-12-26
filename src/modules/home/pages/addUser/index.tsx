@@ -33,13 +33,7 @@ const AddUser = () => {
     },
   });
 
-  console.log(formik);
-
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
-
-  return <AddUserView onSubmit={onSubmit} error={error} formik={formik} />;
+  return <AddUserView  error={error} formik={formik} />;
 };
 
 export default AddUser;

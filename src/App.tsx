@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Home from "./modules/home/pages/Home";
 import AddUser from "./modules/home/pages/addUser";
-import EditUser from "./modules/home/pages/EditUser";
+import EditUser from "./modules/home/pages/editUser";
 import ViewUser from "./modules/home/pages/ViewUser";
 
 function App() {

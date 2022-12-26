@@ -3,15 +3,21 @@ import { Formik, Form } from "formik";
 import { Input } from "reactstrap";
 import { FormikHelpers } from "formik/dist/types";
 import { FormFeedback } from "reactstrap";
-
 import { UserProps } from "../../../../types/UserProps";
+import { User } from "../../../../types/User";
 
-const AddUserView = ({ error, formik }: UserProps) => {
+interface EditUserProps extends UserProps {
+  user: User;
+}
+
+const EditUserView = ({ user, error, formik }: EditUserProps) => {
   return (
     <div className="container">
       <div className="row">
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-          <h2 className="text-center m-4">Cadastrar Usuário</h2>
+          <h2 className="text-center m-4">
+            Editando o Usuário: {user.name || ""}
+          </h2>
           <Formik
             initialValues={{
               name: "",
@@ -104,15 +110,9 @@ const AddUserView = ({ error, formik }: UserProps) => {
                   </FormFeedback>
                 ) : null}
               </div>
-              {error &&
-                error.map((err: string, idx: number) => (
-                  <div key={idx} className="d-flex align-items-center">
-                    <p className="text-danger">{err}</p>
-                  </div>
-                ))}
               <div className="d-flex justify-content-end">
                 <button type="submit" className="btn btn-outline-primary">
-                  Criar
+                  Editar
                 </button>
                 <Link to="/" className="btn btn-outline-danger mx-2">
                   Cancelar
@@ -126,4 +126,4 @@ const AddUserView = ({ error, formik }: UserProps) => {
   );
 };
 
-export default AddUserView;
+export default EditUserView;
