@@ -8,9 +8,11 @@ import { User } from "../../../../types/User";
 
 interface EditUserProps extends UserProps {
   user: User;
+  error: any;
+  apiError: never[];
 }
 
-const EditUserView = ({ user, error, formik }: EditUserProps) => {
+const EditUserView = ({ user, error, apiError, formik }: EditUserProps) => {
   return (
     <div className="container">
       <div className="row">
@@ -110,6 +112,11 @@ const EditUserView = ({ user, error, formik }: EditUserProps) => {
                   </FormFeedback>
                 ) : null}
               </div>
+              {apiError.length ? (
+                <div className="bg-danger rounded px-2 my-2">
+                  <p className="text-white">{apiError}</p>
+                </div>
+              ) : null}
               <div className="d-flex justify-content-end">
                 <button type="submit" className="btn btn-outline-primary">
                   Editar
