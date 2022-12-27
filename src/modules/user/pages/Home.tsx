@@ -67,7 +67,7 @@ const Home = () => {
                   </Link>
                   <button
                     className="btn btn-danger mx-2"
-                    onClick={() => deleteUser(id)}
+                    onClick={() => deleteUser(+id!)}
                   >
                     Deletar
                   </button>

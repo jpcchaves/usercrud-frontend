@@ -4,24 +4,23 @@ import Navbar from "./layout/Navbar";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Home from "./modules/home/pages/Home";
-import AddUser from "./modules/home/pages/addUser";
-import EditUser from "./modules/home/pages/editUser";
-import ViewUser from "./modules/home/pages/ViewUser";
+import Home from "./modules/user/pages/Home";
+import AddUser from "./modules/user/pages/addUser";
+import EditUser from "./modules/user/pages/editUser";
+import ViewUser from "./modules/user/pages/ViewUser";
 
 function App() {
   return (
-    <div>
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
+    <Router>
+      <Routes>
+        <Route path="/" element={<Navbar />}>
+          <Route index element={<Home />} />
           <Route path="/adduser" element={<AddUser />} />
           <Route path="/edituser/:id" element={<EditUser />} />
           <Route path="/viewuser/:id" element={<ViewUser />} />
-        </Routes>
-      </Router>
-    </div>
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 
