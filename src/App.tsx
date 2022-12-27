@@ -4,10 +4,10 @@ import Navbar from "./layout/Navbar";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Home from "./modules/user/pages/Home";
+import Home from "./modules/user/pages/home";
 import AddUser from "./modules/user/pages/addUser";
 import EditUser from "./modules/user/pages/editUser";
-import ViewUser from "./modules/user/pages/ViewUser";
+import ViewUser from "./modules/user/pages/viewUser";
 
 function App() {
   return (

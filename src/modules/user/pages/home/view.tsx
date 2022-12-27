@@ -1,38 +1,15 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useApi } from "../../../hooks/useApi";
 import { Link } from "react-router-dom";
-import { User } from "../../../types/User";
-import UsersNotFound from "../components/usersNotFound";
 
-const Home = () => {
-  const [users, setUser] = useState<User[]>([]);
+import { User } from "../../../../types/User";
 
-  useEffect(() => {
-    getUsers();
-  }, []);
+import UsersNotFound from "../../components/usersNotFound";
 
-  const getUsers = async () => {
-    try {
-      const res = await useApi.get("/users");
+interface HomeViewPros {
+  users: User[];
+  deleteUser: (id: number) => void;
+}
 
-      const fetchedData: User[] = res.data;
-
-      setUser(fetchedData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const deleteUser = async (id: number) => {
-    try {
-      await useApi.delete(`/user/${id}`);
-      getUsers();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+const HomeView = ({ users, deleteUser }: HomeViewPros) => {
   return (
     <div className="container">
       <div className="py-4">
@@ -84,4 +61,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeView;
