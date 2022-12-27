@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import { useApi } from "../../../../hooks/useApi";
 import { UserValidation } from "../../../../validation/UserValidation";
 import EditUserView from "./view";
-import userLoadUser from "../../../../hooks/userLoadUser";
+import userLoadUser from "../../../../hooks/useLoadUser";
 
 const EditUser = () => {
   const navigate = useNavigate();

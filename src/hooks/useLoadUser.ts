@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { useApi } from "./useApi";
 import { User } from "../types/User";
 
-const LoadUser = (id: number) => {
+const useLoadUser = (id: number) => {
   const [user, setUser] = useState<User>(Object);
   const [apiError, setApiError] = useState([]);
 
   useEffect(() => {
     if (id) {
-      loadUser(+id);
+      userLoadUser(+id);
     }
   }, []);
 
@@ -37,4 +37,4 @@ const LoadUser = (id: number) => {
   };
 };
 
-export default userLoadUser;
+export default useLoadUser;
