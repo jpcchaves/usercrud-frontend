@@ -13,7 +13,7 @@ const EditUser = () => {
 
   const { user, apiError } = userLoadUser(+id!);
 
-  const [error, setError] = useState([]);
+  const [error, setError] = useState<never[] | string>("");
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -32,8 +32,15 @@ const EditUser = () => {
         if (error.response) {
           const { data } = error.response;
           setError(Object.values(data));
+        } else if (!error.response.data) {
+          setError("Ocorreu um erro inesperado... Tente novamente mais tarde.");
+        } else {
+          console.log(error.message);
         }
-        console.log(error.message);
+
+        setTimeout(() => {
+          setError("");
+        }, 2000);
       }
     },
   });

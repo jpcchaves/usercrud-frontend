@@ -104,12 +104,11 @@ const AddUserView = ({ error, formik }: UserProps) => {
                   </FormFeedback>
                 ) : null}
               </div>
-              {error &&
-                error.map((err: string, idx: number) => (
-                  <div key={idx} className="d-flex align-items-center">
-                    <p className="text-danger">{err}</p>
-                  </div>
-                ))}
+              {error && (
+                <div className="d-flex aligns-items-center justify-content-center bg-danger rounded mb-3 text-center">
+                  <div className="text-white p-2">{error[0]}</div>
+                </div>
+              )}
               <div className="d-flex justify-content-end">
                 <button type="submit" className="btn btn-outline-primary">
                   Criar

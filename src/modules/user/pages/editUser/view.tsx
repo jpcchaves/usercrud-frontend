@@ -117,6 +117,11 @@ const EditUserView = ({ user, error, apiError, formik }: EditUserProps) => {
                   <p className="text-white">{apiError}</p>
                 </div>
               ) : null}
+              {error && (
+                <div className="d-flex aligns-items-center justify-content-center bg-danger rounded mb-3 text-center">
+                  <div className="text-white p-2">{error[0]}</div>
+                </div>
+              )}
               <div className="d-flex justify-content-end">
                 <button type="submit" className="btn btn-outline-primary">
                   Editar
