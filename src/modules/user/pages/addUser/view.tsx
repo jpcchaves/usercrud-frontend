@@ -5,8 +5,9 @@ import { FormikHelpers } from "formik/dist/types";
 import { FormFeedback } from "reactstrap";
 
 import { UserProps } from "../../../../types/UserProps";
+import Spinner from "../../../../components/Spinner";
 
-const AddUserView = ({ error, formik }: UserProps) => {
+const AddUserView = ({ error, formik, loading }: UserProps) => {
   return (
     <div className="container">
       <div className="row">
@@ -106,14 +107,29 @@ const AddUserView = ({ error, formik }: UserProps) => {
               </div>
               {error && (
                 <div className="d-flex aligns-items-center justify-content-center bg-danger rounded mb-3 text-center">
-                  <div className="text-white p-2">{error[0]}</div>
+                  <div className="text-white p-2">
+                    {typeof error !== "string" ? error[0] : error}
+                  </div>
                 </div>
               )}
               <div className="d-flex justify-content-end">
-                <button type="submit" className="btn btn-outline-primary">
-                  Criar
+                <button
+                  type="submit"
+                  className={
+                    loading
+                      ? "d-flex align-items-center justify-content-center btn btn-outline-primary cursor-na"
+                      : "btn btn-outline-primary"
+                  }
+                  disabled={loading ? true : false}
+                >
+                  {loading ? <Spinner /> : "Criar"}
                 </button>
-                <Link to="/" className="btn btn-outline-danger mx-2">
+                <Link
+                  to="/"
+                  className={`d-flex align-items-center justify-content-center btn btn-outline-danger mx-2 ${
+                    loading ? "disabled" : ""
+                  }`}
+                >
                   Cancelar
                 </Link>
               </div>

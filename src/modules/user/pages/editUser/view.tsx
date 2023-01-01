@@ -5,20 +5,31 @@ import { FormikHelpers } from "formik/dist/types";
 import { FormFeedback } from "reactstrap";
 import { UserProps } from "../../../../types/UserProps";
 import { User } from "../../../../types/User";
+import Spinner from "../../../../components/Spinner";
 
 interface EditUserProps extends UserProps {
   user: User;
   error: any;
   apiError: never[];
+  loading: boolean;
+  isUserLoading: boolean;
 }
 
-const EditUserView = ({ user, error, apiError, formik }: EditUserProps) => {
+const EditUserView = ({
+  user,
+  error,
+  apiError,
+  formik,
+  loading,
+  isUserLoading,
+}: EditUserProps) => {
   return (
     <div className="container">
       <div className="row">
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
           <h2 className="text-center m-4">
-            Editando o Usuário: {user.name || ""}
+            Editando o Usuário:{" "}
+            {isUserLoading ? "Buscando dados..." : user.name}
           </h2>
           <Formik
             initialValues={{
@@ -55,7 +66,9 @@ const EditUserView = ({ user, error, apiError, formik }: EditUserProps) => {
                   placeholder="Digite seu nome..."
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.name || ""}
+                  value={
+                    isUserLoading ? "Buscando dados..." : formik.values.name
+                  }
                   invalid={
                     formik.touched.name && formik.errors.name ? true : false
                   }
@@ -77,7 +90,9 @@ const EditUserView = ({ user, error, apiError, formik }: EditUserProps) => {
                   placeholder="Digite seu usuário..."
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.username || ""}
+                  value={
+                    isUserLoading ? "Buscando dados..." : formik.values.username
+                  }
                   invalid={
                     formik.touched.username && formik.errors.username
                       ? true
@@ -101,7 +116,9 @@ const EditUserView = ({ user, error, apiError, formik }: EditUserProps) => {
                   placeholder="Digite seu email..."
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.email || ""}
+                  value={
+                    isUserLoading ? "Buscando dados..." : formik.values.email
+                  }
                   invalid={
                     formik.touched.email && formik.errors.email ? true : false
                   }
@@ -119,14 +136,29 @@ const EditUserView = ({ user, error, apiError, formik }: EditUserProps) => {
               ) : null}
               {error && (
                 <div className="d-flex aligns-items-center justify-content-center bg-danger rounded mb-3 text-center">
-                  <div className="text-white p-2">{error[0]}</div>
+                  <div className="text-white p-2">
+                    {typeof error !== "string" ? error[0] : error}
+                  </div>
                 </div>
               )}
               <div className="d-flex justify-content-end">
-                <button type="submit" className="btn btn-outline-primary">
-                  Editar
+                <button
+                  type="submit"
+                  className={
+                    loading || isUserLoading
+                      ? "d-flex align-items-center justify-content-center btn btn-outline-primary cursor-na"
+                      : "btn btn-outline-primary"
+                  }
+                  disabled={loading || isUserLoading ? true : false}
+                >
+                  {loading || isUserLoading ? <Spinner /> : "Editar"}
                 </button>
-                <Link to="/" className="btn btn-outline-danger mx-2">
+                <Link
+                  to="/"
+                  className={`d-flex align-items-center justify-content-center btn btn-outline-danger mx-2 ${
+                    loading || isUserLoading ? "disabled" : ""
+                  }`}
+                >
                   Cancelar
                 </Link>
               </div>

@@ -6,6 +6,8 @@ import HomeView from "./view";
 
 const Home = () => {
   const [users, setUser] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [loadDeleteUser, setLoadDeleteUser] = useState(false);
 
   useEffect(() => {
     getUsers();
@@ -18,21 +20,39 @@ const Home = () => {
       const fetchedData: User[] = res.data;
 
       setUser(fetchedData);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
 
-  const deleteUser = async (id: number) => {
+  const deleteUser = async (id: number, name: string) => {
     try {
-      await useApi.delete(`/user/${id}`);
-      getUsers();
+      if (
+        window.confirm(
+          `Você irá apagar o usuário ${name}, deseja continuar...?`
+        ) === true
+      ) {
+        setLoadDeleteUser(true);
+        await useApi.delete(`/user/${id}`);
+        getUsers();
+      }
+      setLoadDeleteUser(false);
     } catch (error) {
+      setLoadDeleteUser(false);
       console.log(error);
     }
   };
 
-  return <HomeView users={users} deleteUser={deleteUser} />;
+  return (
+    <HomeView
+      users={users}
+      deleteUser={deleteUser}
+      loading={loading}
+      loadDeleteUser={loadDeleteUser}
+    />
+  );
 };
 
 export default Home;
