@@ -5,6 +5,7 @@ import { User } from "../types/User";
 const useLoadUser = (id: number) => {
   const [user, setUser] = useState<User>(Object);
   const [apiError, setApiError] = useState([]);
+  const [isUserLoading, setIsUserLoading] = useState(true);
 
   useEffect(() => {
     if (id) {
@@ -18,6 +19,7 @@ const useLoadUser = (id: number) => {
       const user: User = res.data;
 
       setUser(user);
+      setIsUserLoading(false);
     } catch (error: any) {
       if (error.response) {
         const { data } = error.response;
@@ -28,12 +30,14 @@ const useLoadUser = (id: number) => {
       setTimeout(() => {
         setApiError([]);
       }, 2000);
+      setIsUserLoading(false);
     }
   };
 
   return {
     user,
     apiError,
+    isUserLoading,
   };
 };
 

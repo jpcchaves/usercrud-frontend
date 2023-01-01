@@ -8,7 +8,8 @@ import AddUserView from "./view";
 const AddUser = () => {
   const navigate = useNavigate();
 
-  const [error, setError] = useState([]);
+  const [error, setError] = useState<never[] | string>("");
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -20,20 +21,28 @@ const AddUser = () => {
     validationSchema: UserValidation,
     onSubmit: async (values) => {
       try {
+        setLoading(true);
+
         await useApi.post("/user", values);
 
         navigate("/");
       } catch (error: any) {
+        setLoading(false);
         if (error.response) {
           const { data } = error.response;
           setError(Object.values(data));
+        } else {
+          setError("Ocorreu um erro inesperado... Tente novamente mais tarde.");
         }
-        console.log(error.message);
+
+        setTimeout(() => {
+          setError("");
+        }, 2000);
       }
     },
   });
 
-  return <AddUserView  error={error} formik={formik} />;
+  return <AddUserView error={error} formik={formik} loading={loading} />;
 };
 
 export default AddUser;

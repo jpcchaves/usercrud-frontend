@@ -10,6 +10,8 @@ const ViewUser = () => {
     email: "",
   });
 
+  const [loading, setLoading] = useState(true);
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -17,11 +19,16 @@ const ViewUser = () => {
   }, []);
 
   const loadUser = async () => {
-    const res = await useApi.get(`/user/${id}`);
-    setUser(res.data);
+    try {
+      const res = await useApi.get(`/user/${id}`);
+      setUser(res.data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
-  return <ViewUserView user={user} />;
+  return <ViewUserView user={user} loading={loading} />;
 };
 
 export default ViewUser;

@@ -10,7 +10,7 @@ const Navbar = () => {
           </Link>
 
           <Link to="/adduser" className="btn btn-outline-light">
-            Add user
+            Add Usuário
           </Link>
         </div>
       </nav>

@@ -11,9 +11,10 @@ const EditUser = () => {
 
   const { id } = useParams();
 
-  const { user, apiError } = userLoadUser(+id!);
+  const { user, apiError, isUserLoading } = userLoadUser(+id!);
 
-  const [error, setError] = useState([]);
+  const [error, setError] = useState<never[] | string>("");
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -25,15 +26,24 @@ const EditUser = () => {
     validationSchema: UserValidation,
     onSubmit: async (values) => {
       try {
+        setLoading(true);
         await useApi.put(`/user/${id}`, values);
 
         navigate("/");
       } catch (error: any) {
+        setLoading(false);
         if (error.response) {
           const { data } = error.response;
           setError(Object.values(data));
+        } else if (!error.response.data) {
+          setError("Ocorreu um erro inesperado... Tente novamente mais tarde.");
+        } else {
+          console.log(error.message);
         }
-        console.log(error.message);
+
+        setTimeout(() => {
+          setError("");
+        }, 2000);
       }
     },
   });
@@ -44,6 +54,8 @@ const EditUser = () => {
       apiError={apiError}
       formik={formik}
       user={user}
+      loading={loading}
+      isUserLoading={isUserLoading}
     />
   );
 };

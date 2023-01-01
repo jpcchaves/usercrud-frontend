@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import { User } from "../../../../types/User";
 
-const ViewUserView = ({ user }: { user: User }) => {
+interface ViewUserProps {
+  user: User;
+  loading: boolean;
+}
+
+const ViewUserView = ({ user, loading }: ViewUserProps) => {
   return (
     <div className="container">
       <div className="row">
@@ -10,20 +15,21 @@ const ViewUserView = ({ user }: { user: User }) => {
           <div className="card">
             <div className="card-header">
               <p>
-                Usuário: <strong>{user.name || ""}</strong>
+                Usuário:{" "}
+                <strong>{loading ? "Buscando dados..." : user.name}</strong>
               </p>
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">
                   <b>Nome: </b>
-                  {user.name || ""}
+                  {loading ? "Buscando dados..." : user.name}
                 </li>
                 <li className="list-group-item">
                   <b>Usuário: </b>
-                  {user.username || ""}
+                  {loading ? "Buscando dados..." : user.username}
                 </li>
                 <li className="list-group-item">
                   <b>Email: </b>
-                  {user.email || ""}
+                  {loading ? "Buscando dados..." : user.email}
                 </li>
               </ul>
             </div>
